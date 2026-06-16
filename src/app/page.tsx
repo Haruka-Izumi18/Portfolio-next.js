@@ -1,20 +1,30 @@
 import Link from "next/link";
 import Image from "next/image";
+import RealizationItem from "@/components/realizationItem";
 
 export default function Home() {
+  const realization = [
+    {
+    title: "BlablaBook",
+    image: "blablabook.png",
+    discription: "Plateforme communautaire permettant de découvrir, partager et recommander des livres. Les utilisateurs peuvent créer un compte, rechercher des ouvrages et interagir avec la communauté.",
+    url: "https://blablabook-haruka.vercel.app/"
+    }
+  ]
+
   return (
       <main className="flex w-full max-w-5xl flex-col py-20 px-16 font-sans dark:bg-black">
        <div className="flex flex-row w-full items-center justify-between pb-20">
-              <a href="#realization">
-                Réalisation
+              <a href="#realization" className="hover:underline text-lg font-medium">
+                Réalisations
               </a>
-              <a href="#about">
+              <a href="#about" className="hover:underline text-lg font-medium">
                 À props
               </a>
-              <a href="#links">
+              <a href="#links" className="hover:underline text-lg font-medium">
                Liens
               </a>
-              <a href="#contact">
+              <a href="#contact" className="hover:underline text-lg font-medium">
                 Contactez-moi
               </a>
               </div>
@@ -24,22 +34,27 @@ export default function Home() {
             <h1 className="text-4xl font-semibold dark:text-zinc-50">
               Développeuse Web <br />Full Stack
             </h1>
-            <h2 className="text-4xl font-bold leading-10 tracking-tight dark:text-zinc-50">
+            <h2 className="text-4xl font-bold tracking-tight dark:text-zinc-50">
               Haruka IZUMI
             </h2>
           </div>
-          <div className="flex-shrink-0">
+          <div className="relative flex-shrink-0 w-full h-[260px] lg:w-[480px] lg:h-[320px]">
             <Image
               src="/mac-code.webp"
-              width={300}
-              height={200}
+              fill
+              sizes="(max-width: 1024px) 100vw, 480px"
               className="object-cover rounded-lg"
               alt="ordinateur"
             />
           </div>
         </div>
-     <section id="realization">
-      Réalisations
+     <section
+     id="realization"
+     className="flex flex-col items-center justify-center pt-10">
+      <h2 className="text-xl font-bold leading-10 tracking-tight dark:text-zinc-50">Réalisations</h2>
+      {realization.map((item) =>
+      <RealizationItem key={item.title} {...item} />
+      )}
      </section>
      <section id="about">
       À props
