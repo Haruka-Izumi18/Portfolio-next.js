@@ -1,6 +1,6 @@
-import Link from "next/link";
 import Image from "next/image";
 import RealizationItem from "@/components/realizationItem";
+import Profil from "@/components/profil";
 
 export default function Home() {
   const realization = [
@@ -51,13 +51,20 @@ export default function Home() {
      <section
      id="realization"
      className="flex flex-col items-center justify-center pt-10">
-      <h2 className="text-xl font-bold leading-10 tracking-tight dark:text-zinc-50">Réalisations</h2>
+      <h2 className="text-2xl font-bold leading-10 tracking-tight dark:text-zinc-50">
+        Réalisations
+        </h2>
       {realization.map((item) =>
       <RealizationItem key={item.title} {...item} />
       )}
      </section>
-     <section id="about">
-      À props
+     <section
+     id="about"
+      className="flex flex-col items-center justify-center pt-10">
+      <h2 className="text-2xl font-bold leading-10 tracking-tight dark:text-zinc-50">
+        À props
+      </h2>
+      <Profil />
      </section>
      <section id="links">
       Liens
