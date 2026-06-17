@@ -32,7 +32,7 @@ export default function Home() {
         <div className="flex w-full flex-col lg:flex-row items-center lg:justify-between">
           <div className="flex flex-1 flex-col gap-4 text-left">
             <h1 className="text-4xl font-semibold dark:text-zinc-50">
-              Développeuse Web <br />Full Stack
+              Développeuse Web <br /> Full Stack
             </h1>
             <h2 className="text-4xl font-bold tracking-tight dark:text-zinc-50">
               Haruka IZUMI
@@ -51,7 +51,7 @@ export default function Home() {
      <section
      id="realization"
      className="flex flex-col items-center justify-center pt-10">
-      <h2 className="text-2xl font-bold leading-10 tracking-tight dark:text-zinc-50">
+      <h2 className="text-2xl font-bold leading-10 tracking-tight dark:text-zinc-50 pb-3">
         Réalisations
         </h2>
       {realization.map((item) =>
@@ -61,7 +61,7 @@ export default function Home() {
      <section
      id="about"
       className="flex flex-col items-center justify-center pt-10">
-      <h2 className="text-2xl font-bold leading-10 tracking-tight dark:text-zinc-50">
+      <h2 className="text-2xl font-bold leading-10 tracking-tight dark:text-zinc-50 pb-3">
         À props
       </h2>
       <Profil />
