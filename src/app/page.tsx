@@ -1,35 +1,39 @@
 import Image from "next/image";
 import RealizationItem from "@/components/realizationItem";
 import Profil from "@/components/profil";
+import { Mail } from 'lucide-react';
 
 export default function Home() {
   const realization = [
     {
-    title: "BlablaBook",
-    image: "blablabook.png",
-    discription: "Plateforme communautaire permettant de découvrir, partager et recommander des livres. Les utilisateurs peuvent créer un compte, rechercher des ouvrages et interagir avec la communauté.",
-    url: "https://blablabook-haruka.vercel.app/"
-    }
-  ]
+      title: "BlablaBook",
+      image: "blablabook.png",
+      discription:
+        "Plateforme communautaire permettant de découvrir, partager et recommander des livres. Les utilisateurs peuvent créer un compte, rechercher des ouvrages et interagir avec la communauté.",
+      url: "https://blablabook-haruka.vercel.app/",
+    },
+  ];
 
   return (
-      <main className="flex w-full max-w-5xl flex-col py-20 px-16 font-sans dark:bg-black">
-       <div className="flex flex-row w-full items-center justify-between pb-20">
-              <a href="#realization" className="hover:underline text-lg font-medium">
-                Réalisations
-              </a>
-              <a href="#about" className="hover:underline text-lg font-medium">
-                À props
-              </a>
-              <a href="#links" className="hover:underline text-lg font-medium">
-               Liens
-              </a>
-              <a href="#contact" className="hover:underline text-lg font-medium">
-                Contactez-moi
-              </a>
-              </div>
-        
-        <div className="flex w-full flex-col lg:flex-row items-center lg:justify-between">
+    <>
+      <main className="flex w-full flex-col items-center py-20 px-16 font-sans dark:bg-black">
+        <div className="flex flex-row w-full max-w-5xl items-center justify-between pb-20">
+          <a
+            href="#realization"
+            className="hover:underline text-lg font-medium"
+          >
+            Réalisations
+          </a>
+          <a href="#about" className="hover:underline text-lg font-medium">
+            À props
+          </a>
+
+          <a href="#contact" className="hover:underline text-lg font-medium">
+            Contactez-moi
+          </a>
+        </div>
+
+        <div className="flex w-full max-w-5xl flex-col lg:flex-row items-center lg:justify-between">
           <div className="flex flex-1 flex-col gap-4 text-left">
             <h1 className="text-4xl font-semibold dark:text-zinc-50">
               Développeuse Web <br /> Full Stack
@@ -48,30 +52,40 @@ export default function Home() {
             />
           </div>
         </div>
-     <section
-     id="realization"
-     className="flex flex-col items-center justify-center pt-10">
-      <h2 className="text-2xl font-bold leading-10 tracking-tight dark:text-zinc-50 pb-3">
-        Réalisations
-        </h2>
-      {realization.map((item) =>
-      <RealizationItem key={item.title} {...item} />
-      )}
-     </section>
-     <section
-     id="about"
-      className="flex flex-col items-center justify-center pt-10">
-      <h2 className="text-2xl font-bold leading-10 tracking-tight dark:text-zinc-50 pb-3">
-        À props
-      </h2>
-      <Profil />
-     </section>
-     <section id="links">
-      Liens
-     </section>
-     <section id="contact">
-      Contactez-moi
-     </section>
+        <section
+          id="realization"
+          className="flex flex-col items-center justify-center pt-10"
+        >
+          <h2 className="text-2xl font-bold leading-10 tracking-tight dark:text-zinc-50 pb-3">
+            Réalisations
+          </h2>
+          {realization.map((item) => (
+            <RealizationItem key={item.title} {...item} />
+          ))}
+        </section>
+        <section
+          id="about"
+          className="flex flex-col items-center justify-center pt-10"
+        >
+          <h2 className="text-2xl font-bold leading-10 tracking-tight dark:text-zinc-50 pb-3">
+            À props
+          </h2>
+          <Profil />
+        </section>
+
+        <section id="contact" className="items-center justify-center pt-10">
+            <a href="mailto:haruka.izumi18&#64;gmail.com" className="flex items-center gap-3 hover:text-[var(--secondary)] transition-colors" >
+             <Mail  />
+              <h2 className="text-2xl font-bold">
+                Contactez-moi
+              </h2>
+            </a>
+        </section>
       </main>
+
+      <footer className="w-full flex justify-center py-6">
+        <p className="text-xl font-normal pl-2">&copy;Haruka IZUMI - 2026</p>
+      </footer>
+    </>
   );
 }

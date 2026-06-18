@@ -97,7 +97,7 @@ function RootLayout({ children }) {
         lang: "fr",
         className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["cn"])("h-full", "antialiased", "font-sans", __TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$geist_da832ead$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].variable),
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$2$2e$9_$40$babel$2b$core$40$7$2e$29$2e$7_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$0$2e$0_react$2d$dom$40$19$2e$2$2e$4_react$40$19$2e$2$2e$4_$5f$react$40$19$2e$2$2e$4$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("body", {
-            className: `${__TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$noto_sans_9da210a5$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].variable} min-h-full flex justify-center`,
+            className: `${__TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$noto_sans_9da210a5$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].variable} min-h-full`,
             children: children
         }, void 0, false, {
             fileName: "[project]/src/app/layout.tsx",

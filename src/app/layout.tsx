@@ -25,7 +25,7 @@ export default function RootLayout({
       lang="fr"
       className={cn("h-full", "antialiased", "font-sans", geist.variable)}
     >
-      <body className={`${notoSans.variable} min-h-full flex justify-center`}>{children}</body>
+      <body className={`${notoSans.variable} min-h-full`}>{children}</body>
     </html>
   );
 }
