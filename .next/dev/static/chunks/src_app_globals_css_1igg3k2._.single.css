@@ -5,6 +5,11 @@
       --tw-scale-x: 1;
       --tw-scale-y: 1;
       --tw-scale-z: 1;
+      --tw-rotate-x: initial;
+      --tw-rotate-y: initial;
+      --tw-rotate-z: initial;
+      --tw-skew-x: initial;
+      --tw-skew-y: initial;
       --tw-border-style: solid;
       --tw-leading: initial;
       --tw-font-weight: initial;
@@ -386,6 +391,10 @@
     margin-inline: auto;
   }
 
+  .mt-4 {
+    margin-top: calc(var(--spacing) * 4);
+  }
+
   .flex {
     display: flex;
   }
@@ -396,6 +405,11 @@
 
   .inline-flex {
     display: inline-flex;
+  }
+
+  .size-1\.5 {
+    width: calc(var(--spacing) * 1.5);
+    height: calc(var(--spacing) * 1.5);
   }
 
   .size-6 {
@@ -438,6 +452,10 @@
     height: calc(var(--spacing) * 48);
   }
 
+  .h-\[2px\] {
+    height: 2px;
+  }
+
   .h-\[25px\] {
     height: 25px;
   }
@@ -454,8 +472,16 @@
     height: 100%;
   }
 
+  .h-px {
+    height: 1px;
+  }
+
   .min-h-full {
     min-height: 100%;
+  }
+
+  .w-10 {
+    width: calc(var(--spacing) * 10);
   }
 
   .w-\[25px\] {
@@ -491,6 +517,10 @@
     --tw-scale-y: 125%;
     --tw-scale-z: 125%;
     scale: var(--tw-scale-x) var(--tw-scale-y);
+  }
+
+  .transform {
+    transform: var(--tw-rotate-x, ) var(--tw-rotate-y, ) var(--tw-rotate-z, ) var(--tw-skew-x, ) var(--tw-skew-y, );
   }
 
   .auto-rows-min {
@@ -549,12 +579,20 @@
     gap: calc(var(--spacing) * 4);
   }
 
+  .gap-5 {
+    gap: calc(var(--spacing) * 5);
+  }
+
   .gap-6 {
     gap: calc(var(--spacing) * 6);
   }
 
   .gap-8 {
     gap: calc(var(--spacing) * 8);
+  }
+
+  .gap-10 {
+    gap: calc(var(--spacing) * 10);
   }
 
   .self-start {
@@ -575,6 +613,10 @@
 
   .rounded-\[min\(var\(--radius-md\)\,12px\)\] {
     border-radius: min(var(--radius-md), 12px);
+  }
+
+  .rounded-full {
+    border-radius: 3.40282e38px;
   }
 
   .rounded-lg {
@@ -619,6 +661,36 @@
 
   .border-transparent {
     border-color: #0000;
+  }
+
+  .bg-\[\#68a618\]\/35 {
+    background-color: #68a61859;
+    background-color: lab(62.0595% -36.342 58.4766 / .35);
+  }
+
+  .bg-\[\#68a618\]\/50 {
+    background-color: #68a61880;
+    background-color: lab(62.0595% -36.342 58.4766 / .5);
+  }
+
+  .bg-\[var\(--secondary\)\]\/35 {
+    background-color: var(--secondary);
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    .bg-\[var\(--secondary\)\]\/35 {
+      background-color: color-mix(in oklab, var(--secondary) 35%, transparent);
+    }
+  }
+
+  .bg-\[var\(--secondary\)\]\/50 {
+    background-color: var(--secondary);
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    .bg-\[var\(--secondary\)\]\/50 {
+      background-color: color-mix(in oklab, var(--secondary) 50%, transparent);
+    }
   }
 
   .bg-background {
@@ -1545,6 +1617,31 @@ body {
   syntax: "*";
   inherits: false;
   initial-value: 1;
+}
+
+@property --tw-rotate-x {
+  syntax: "*";
+  inherits: false
+}
+
+@property --tw-rotate-y {
+  syntax: "*";
+  inherits: false
+}
+
+@property --tw-rotate-z {
+  syntax: "*";
+  inherits: false
+}
+
+@property --tw-skew-x {
+  syntax: "*";
+  inherits: false
+}
+
+@property --tw-skew-y {
+  syntax: "*";
+  inherits: false
 }
 
 @property --tw-border-style {
