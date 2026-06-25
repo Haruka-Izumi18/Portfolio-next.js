@@ -347,16 +347,6 @@ export type ProjectUncheckedUpdateManyInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
-export type ProjectListRelationFilter = {
-  every?: Prisma.ProjectWhereInput
-  some?: Prisma.ProjectWhereInput
-  none?: Prisma.ProjectWhereInput
-}
-
-export type ProjectOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
-}
-
 export type ProjectCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
@@ -393,6 +383,42 @@ export type ProjectMinOrderByAggregateInput = {
 export type ProjectScalarRelationFilter = {
   is?: Prisma.ProjectWhereInput
   isNot?: Prisma.ProjectWhereInput
+}
+
+export type ProjectListRelationFilter = {
+  every?: Prisma.ProjectWhereInput
+  some?: Prisma.ProjectWhereInput
+  none?: Prisma.ProjectWhereInput
+}
+
+export type ProjectOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
+}
+
+export type StringFieldUpdateOperationsInput = {
+  set?: string
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
+}
+
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Date | string
+}
+
+export type ProjectCreateNestedOneWithoutTechnologiesInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutTechnologiesInput, Prisma.ProjectUncheckedCreateWithoutTechnologiesInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutTechnologiesInput
+  connect?: Prisma.ProjectWhereUniqueInput
+}
+
+export type ProjectUpdateOneRequiredWithoutTechnologiesNestedInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutTechnologiesInput, Prisma.ProjectUncheckedCreateWithoutTechnologiesInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutTechnologiesInput
+  upsert?: Prisma.ProjectUpsertWithoutTechnologiesInput
+  connect?: Prisma.ProjectWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutTechnologiesInput, Prisma.ProjectUpdateWithoutTechnologiesInput>, Prisma.ProjectUncheckedUpdateWithoutTechnologiesInput>
 }
 
 export type ProjectCreateNestedManyWithoutUserInput = {
@@ -437,18 +463,64 @@ export type ProjectUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.ProjectScalarWhereInput | Prisma.ProjectScalarWhereInput[]
 }
 
-export type ProjectCreateNestedOneWithoutTechnologiesInput = {
-  create?: Prisma.XOR<Prisma.ProjectCreateWithoutTechnologiesInput, Prisma.ProjectUncheckedCreateWithoutTechnologiesInput>
-  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutTechnologiesInput
-  connect?: Prisma.ProjectWhereUniqueInput
+export type ProjectCreateWithoutTechnologiesInput = {
+  id: string
+  title: string
+  description?: string | null
+  image?: string | null
+  demoUrl: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutProjectsInput
 }
 
-export type ProjectUpdateOneRequiredWithoutTechnologiesNestedInput = {
-  create?: Prisma.XOR<Prisma.ProjectCreateWithoutTechnologiesInput, Prisma.ProjectUncheckedCreateWithoutTechnologiesInput>
-  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutTechnologiesInput
-  upsert?: Prisma.ProjectUpsertWithoutTechnologiesInput
-  connect?: Prisma.ProjectWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutTechnologiesInput, Prisma.ProjectUpdateWithoutTechnologiesInput>, Prisma.ProjectUncheckedUpdateWithoutTechnologiesInput>
+export type ProjectUncheckedCreateWithoutTechnologiesInput = {
+  id: string
+  title: string
+  description?: string | null
+  image?: string | null
+  demoUrl: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  userId: string
+}
+
+export type ProjectCreateOrConnectWithoutTechnologiesInput = {
+  where: Prisma.ProjectWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutTechnologiesInput, Prisma.ProjectUncheckedCreateWithoutTechnologiesInput>
+}
+
+export type ProjectUpsertWithoutTechnologiesInput = {
+  update: Prisma.XOR<Prisma.ProjectUpdateWithoutTechnologiesInput, Prisma.ProjectUncheckedUpdateWithoutTechnologiesInput>
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutTechnologiesInput, Prisma.ProjectUncheckedCreateWithoutTechnologiesInput>
+  where?: Prisma.ProjectWhereInput
+}
+
+export type ProjectUpdateToOneWithWhereWithoutTechnologiesInput = {
+  where?: Prisma.ProjectWhereInput
+  data: Prisma.XOR<Prisma.ProjectUpdateWithoutTechnologiesInput, Prisma.ProjectUncheckedUpdateWithoutTechnologiesInput>
+}
+
+export type ProjectUpdateWithoutTechnologiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  demoUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutProjectsNestedInput
+}
+
+export type ProjectUncheckedUpdateWithoutTechnologiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  demoUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ProjectCreateWithoutUserInput = {
@@ -511,66 +583,6 @@ export type ProjectScalarWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   userId?: Prisma.StringFilter<"Project"> | string
-}
-
-export type ProjectCreateWithoutTechnologiesInput = {
-  id: string
-  title: string
-  description?: string | null
-  image?: string | null
-  demoUrl: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutProjectsInput
-}
-
-export type ProjectUncheckedCreateWithoutTechnologiesInput = {
-  id: string
-  title: string
-  description?: string | null
-  image?: string | null
-  demoUrl: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  userId: string
-}
-
-export type ProjectCreateOrConnectWithoutTechnologiesInput = {
-  where: Prisma.ProjectWhereUniqueInput
-  create: Prisma.XOR<Prisma.ProjectCreateWithoutTechnologiesInput, Prisma.ProjectUncheckedCreateWithoutTechnologiesInput>
-}
-
-export type ProjectUpsertWithoutTechnologiesInput = {
-  update: Prisma.XOR<Prisma.ProjectUpdateWithoutTechnologiesInput, Prisma.ProjectUncheckedUpdateWithoutTechnologiesInput>
-  create: Prisma.XOR<Prisma.ProjectCreateWithoutTechnologiesInput, Prisma.ProjectUncheckedCreateWithoutTechnologiesInput>
-  where?: Prisma.ProjectWhereInput
-}
-
-export type ProjectUpdateToOneWithWhereWithoutTechnologiesInput = {
-  where?: Prisma.ProjectWhereInput
-  data: Prisma.XOR<Prisma.ProjectUpdateWithoutTechnologiesInput, Prisma.ProjectUncheckedUpdateWithoutTechnologiesInput>
-}
-
-export type ProjectUpdateWithoutTechnologiesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  demoUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutProjectsNestedInput
-}
-
-export type ProjectUncheckedUpdateWithoutTechnologiesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  demoUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ProjectCreateManyUserInput = {

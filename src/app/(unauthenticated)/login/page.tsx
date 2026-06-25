@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { LoginForm } from "@/components/login-form";
+import { SignInFormComponent } from "@/components/signin-form";
 import { SingupFormComponent } from "@/components/signup-form";
 import { toast } from "sonner"
 import { authClient } from "@/lib/auth-client";
@@ -22,9 +22,8 @@ export default function LoginPage() {
 
   useEffect(() => {
     const r = session?.user?.role;
-    if (!r || !ADMIN_ROLE.includes(r as (typeof ADMIN_ROLE)[number])) {
+    if (r !== "admin") 
       return;
-    }
     router.replace("/admin/dashboard");
   }, [session, router]);
 
@@ -42,17 +41,13 @@ export default function LoginPage() {
 
   const [loading, setLoading] = useState(false);
 
-  const handleSignUp = async (e: React.FormEvent) => {
+  const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (signInForm.password !== signUpForm.confirmPassword){
-      toast.error("Les mots de passe ne correspondent pas.");
-      return;
-    }
     setLoading(true);
-    const { data, error } = await authClient.signUp.email({
-      name: signUpForm.name,
-      email: signUpForm.email,
-      password: signUpForm.password,
+    const { data, error } = await authClient.signIn.email({
+      email: signInForm.email,
+      password: signInForm.password,
+      callbackURL: "/admin/dashboard",
     });
     setLoading(false);
 
@@ -63,14 +58,39 @@ export default function LoginPage() {
     router.push("/admin/dashboard");
   }
 
+  const handleSignUp = async (e: React.FormEvent) => {
+    console.log("APP_URL =", process.env.NEXT_PUBLIC_APP_URL);
+console.log("window.origin =", window.location.origin);
+    e.preventDefault();
+    if (signUpForm.password !== signUpForm.confirmPassword){
+      toast.error("Les mots de passe ne correspondent pas.");
+      return;
+    }
+    setLoading(true);
+    const { data, error } = await authClient.signUp.email({
+      name: signUpForm.name,
+      email: signUpForm.email,
+      password: signUpForm.password,
+      callbackURL: "/admin/dashboard",
+    });
+    setLoading(false);
+    console.log(authClient);
+
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    router.push("/admin/dashboard");
+  }
+
   return (
     <div className="w-full max-w-md">
-      <Tabs defaultValue="overview" className="w-[400px]">
+      <Tabs defaultValue="signIn" className="w-[400px]">
         <TabsList>
-          <TabsTrigger value="singIn">Connexion</TabsTrigger>
-          <TabsTrigger value="singUp">Inscription</TabsTrigger>
+          <TabsTrigger value="signIn">Connexion</TabsTrigger>
+          <TabsTrigger value="signUp">Inscription</TabsTrigger>
         </TabsList>
-        <TabsContent value="singIn">
+        <TabsContent value="signIn">
           <Card>
             <CardHeader>
               <CardTitle>Connexion</CardTitle>
@@ -79,11 +99,16 @@ export default function LoginPage() {
               </CardDescription>
             </CardHeader>
             <CardContent className="text-sm text-muted-foreground">
-             <LoginForm />
+             <SignInFormComponent
+             signInForm={signInForm}
+               setSignInForm={setSignInForm}
+               handleSignIn={handleSignIn}
+               loading={loading}
+               oauthCallbackURL="/admin/dashboard" />
             </CardContent>
           </Card>
         </TabsContent>
-        <TabsContent value="singUp">
+        <TabsContent value="signUp">
           <Card>
             <CardHeader>
               <CardTitle>Inscription</CardTitle>

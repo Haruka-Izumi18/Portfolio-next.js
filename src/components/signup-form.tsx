@@ -10,7 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner"
 
-type SingupFormProis = {
+type SingupFormProps = {
   className?: string
   signUpForm: {
     name: string
@@ -37,7 +37,7 @@ export function SingupFormComponent({
   handleSignUp,
   loading,
   oautCallbackURL,
-}: SingupFormProis){
+}: SingupFormProps){
 
     return(
         <form onSubmit={handleSignUp}>
@@ -76,6 +76,7 @@ export function SingupFormComponent({
                           id="signup-password"
                           placeholder="Mot de passe"
                           value={signUpForm.password}
+                          type="password"
                           onChange={(e) => setSignUpForm((f) => ({ ...f, password: e.target.value }))}
                           required
                         />
@@ -88,6 +89,7 @@ export function SingupFormComponent({
                           id="signup-confirmPassword"
                           placeholder="Mot de passe"
                           value={signUpForm.confirmPassword}
+                          type="password"
                           onChange={(e) => setSignUpForm((f) => ({ ...f, confirmPassword: e.target.value }))}
                           required
                         />
