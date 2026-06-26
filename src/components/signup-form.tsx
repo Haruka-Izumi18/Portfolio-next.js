@@ -1,35 +1,32 @@
-"use client"
+"use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  Field,
-  FieldGroup,
-  FieldLabel,
-  FieldSet,
-} from "@/components/ui/field";
+import { Field, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { toast } from "sonner"
+import { toast } from "sonner";
+import { Eye, EyeClosed } from "lucide-react";
+import { useState } from "react";
 
 type SingupFormProps = {
-  className?: string
+  className?: string;
   signUpForm: {
-    name: string
-    email: string
-    password: string
-    confirmPassword: string
-  }
+    name: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+  };
   setSignUpForm: React.Dispatch<
     React.SetStateAction<{
-      name: string
-      email: string
-      password: string
-      confirmPassword: string
+      name: string;
+      email: string;
+      password: string;
+      confirmPassword: string;
     }>
-  >
-  handleSignUp: (e: React.FormEvent<HTMLFormElement>) => void
-  loading: boolean
-  oautCallbackURL?: string
-}
+  >;
+  handleSignUp: (e: React.FormEvent<HTMLFormElement>) => void;
+  loading: boolean;
+  oautCallbackURL?: string;
+};
 
 export function SingupFormComponent({
   signUpForm,
@@ -37,72 +34,99 @@ export function SingupFormComponent({
   handleSignUp,
   loading,
   oautCallbackURL,
-}: SingupFormProps){
+}: SingupFormProps) {
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-    return(
-        <form onSubmit={handleSignUp}>
-                <FieldGroup>
-                  <FieldSet>
-                    <FieldGroup>
-                      <Field>
-                        <FieldLabel htmlFor="signup-name">
-                          Nom
-                        </FieldLabel>
-                        <Input
-                          id="signup-name"
-                          placeholder="Votre nom"
-                          value={signUpForm.name}
-                          onChange={(e) => setSignUpForm((f) => ({ ...f, name: e.target.value }))}
-                          required
-                        />
-                      </Field>
-                      <Field>
-                        <FieldLabel htmlFor="signup-email">
-                          Email
-                        </FieldLabel>
-                        <Input
-                          id="signup-email"
-                          placeholder="exemple@mail.com"
-                          value={signUpForm.email}
-                          onChange={(e) => setSignUpForm((f) => ({ ...f, email: e.target.value }))}
-                          required
-                        />
-                      </Field>
-                      <Field>
-                        <FieldLabel htmlFor="signup-password">
-                          Mot de passe
-                        </FieldLabel>
-                        <Input
-                          id="signup-password"
-                          placeholder="Mot de passe"
-                          value={signUpForm.password}
-                          type="password"
-                          onChange={(e) => setSignUpForm((f) => ({ ...f, password: e.target.value }))}
-                          required
-                        />
-                      </Field>
-                      <Field>
-                        <FieldLabel htmlFor="signup-confirmPassword">
-                          Confirmez le mot de passe
-                        </FieldLabel>
-                        <Input
-                          id="signup-confirmPassword"
-                          placeholder="Mot de passe"
-                          value={signUpForm.confirmPassword}
-                          type="password"
-                          onChange={(e) => setSignUpForm((f) => ({ ...f, confirmPassword: e.target.value }))}
-                          required
-                        />
-                      </Field>
-                    </FieldGroup>
-                  </FieldSet>
-                  <Field orientation="horizontal">
-                    <Button type="submit">Crée le compte</Button>
-                    <Button variant="outline" type="button">
-                      Annulé
-                    </Button>
-                  </Field>
-                </FieldGroup>
-              </form>
-    )
+  return (
+    <form onSubmit={handleSignUp}>
+      <FieldGroup>
+        <FieldSet>
+          <FieldGroup>
+            <Field>
+              <FieldLabel htmlFor="signup-name">Nom</FieldLabel>
+              <Input
+                id="signup-name"
+                placeholder="Votre nom"
+                value={signUpForm.name}
+                onChange={(e) =>
+                  setSignUpForm((f) => ({ ...f, name: e.target.value }))
+                }
+                required
+              />
+            </Field>
+            <Field>
+              <FieldLabel htmlFor="signup-email">Email</FieldLabel>
+              <Input
+                id="signup-email"
+                placeholder="exemple@mail.com"
+                value={signUpForm.email}
+                onChange={(e) =>
+                  setSignUpForm((f) => ({ ...f, email: e.target.value }))
+                }
+                required
+              />
+            </Field>
+            <Field>
+              <FieldLabel htmlFor="signup-password">Mot de passe</FieldLabel>
+               <div className="relative">
+              <Input
+                id="signup-password"
+                placeholder="Mot de passe"
+                value={signUpForm.password}
+                type={showPassword ? "text" : "password"}
+                onChange={(e) =>
+                  setSignUpForm((f) => ({ ...f, password: e.target.value }))
+                }
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-black-500 hover:text-gray-700"
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? <EyeClosed size={18} /> : <Eye size={18} />}
+              </button>
+              </div>
+            </Field>
+            <Field>
+              <FieldLabel htmlFor="signup-confirmPassword">
+                Confirmez le mot de passe
+              </FieldLabel>
+              <div className="relative">
+              <Input
+                id="signup-confirmPassword"
+                placeholder="Mot de passe"
+                value={signUpForm.confirmPassword}
+                type={showConfirmPassword ? "text" : "password"}
+                onChange={(e) =>
+                  setSignUpForm((f) => ({
+                    ...f,
+                    confirmPassword: e.target.value,
+                  }))
+                }
+                required
+              />
+             <button
+                type="button"
+                onClick={() => setShowConfirmPassword((prev) => !prev)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-black-500 hover:text-gray-700"
+                aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+              >
+                {showConfirmPassword ? <EyeClosed size={18} /> : <Eye size={18} />}
+              </button>
+              </div>
+              </Field>
+          </FieldGroup>
+        </FieldSet>
+        <Field orientation="horizontal">
+          <Button type="submit">Crée le compte</Button>
+          <Button variant="outline" type="button">
+            Annulé
+          </Button>
+        </Field>
+      </FieldGroup>
+    </form>
+  );
 }
