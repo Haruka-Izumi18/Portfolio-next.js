@@ -1,3 +1,4 @@
+"use client"
 import Image from "next/image";
 import {
   Card,
@@ -6,19 +7,27 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-
+import { motion } from "motion/react";
 
  export default function RealizationItem({
   title,
   image,
   discription,
   url,
+  animationIndex,
 }: {
   title: string;
   image: string;
   discription: string;
   url: string;
+  animationIndex: number;
 }) {return (
+  <motion.div
+    initial={{ opacity: 0, y: 60 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, amount: 0.3 }}
+    transition={{ duration: 0.6, delay: animationIndex * 0.15 }}
+  >
     <Card size="sm" className="mx-auto w-full max-w-sm shadow-lg p-3">
       <CardHeader>
         <div className="relative w-full h-48 rounded-md overflow-hidden">
@@ -41,5 +50,6 @@ import { Button } from "@/components/ui/button";
           </a>
         </Button>
     </Card>
+    </motion.div>
   );
 }

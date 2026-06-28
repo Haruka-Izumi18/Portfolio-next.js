@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { Eye, EyeClosed } from "lucide-react";
 import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
+import Image from "next/image";
 
 type SingupFormProps = {
   className?: string;
@@ -128,15 +129,24 @@ export function SingupFormComponent({
           </Button>
         </Field>
         <Field>
-          <Button
-            type="button"
-            onClick={async () => {
-              await authClient.signIn.social({
-                provider: "google",
-                callbackURL: "/admin/dashboard",
-              });
-            }}
-          >
+              <Button
+                      type="button"
+                      variant="outline"
+                      className="w-full border-primary bg-white text-primary hover:bg-primary/5"
+                      onClick={async () => {
+                        await authClient.signIn.social({
+                          provider: "google",
+                          callbackURL: "/admin/dashboard",
+                        });
+                      }}
+                    >
+                      <Image
+                        src="/icons8-logo-google-48.png"
+                        height={20}
+                        width={20}
+                        className="mr-2 object-contain"
+                        alt="google"
+                      />
             Connexion avec Google
             </Button>
         </Field>

@@ -12,6 +12,7 @@ export default function Home() {
       discription:
         "Plateforme communautaire permettant de découvrir, partager et recommander des livres. Les utilisateurs peuvent créer un compte, rechercher des ouvrages et interagir avec la communauté.",
       url: "https://blablabook-haruka.vercel.app/",
+      animationIndex: 1,
     },
   ];
 
@@ -63,9 +64,11 @@ export default function Home() {
         </h2>
          <span className="h-[2px] w-10 bg-[var(--secondary)]/35"></span>
           </div>
-        {realization.map((item) => (
-          <RealizationItem key={item.title} {...item} />
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {realization.map((item, index) => (
+          <RealizationItem key={item.title} {...item} animationIndex={index} />
         ))}
+        </div>
       </section>
       <section
         id="about"
@@ -96,7 +99,9 @@ export default function Home() {
 
       <footer className="w-full flex flex-row justify-center items-center gap-5 py-6">
         <p className="text-xl font-normal pl-2">&copy;Haruka IZUMI - 2026</p>
+        <div className="hover:underline">
         <Link href="/login">Espace Admin</Link>
+        </div>
       </footer>
     </>
   );
