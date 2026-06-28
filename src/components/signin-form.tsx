@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { Eye, EyeClosed } from "lucide-react";
 import { useState } from "react";
+import { authClient } from "@/lib/auth-client";
 
 type SingInFormProps = {
   className?: string;
@@ -81,6 +82,20 @@ export function SignInFormComponent({
           <Button variant="outline" type="button">
             Annulé
           </Button>
+        </Field>
+        <Field>
+          <Button
+  type="button"
+  onClick={async () => {
+    await authClient.signIn.social({
+      provider: "google",
+      callbackURL: "/admin/dashboard",
+    });
+  }}
+>
+  Connexion avec Google
+  </Button>
+
         </Field>
       </FieldGroup>
     </form>
