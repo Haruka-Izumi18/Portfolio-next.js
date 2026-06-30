@@ -147,7 +147,7 @@ export function SingupFormComponent({
                         className="mr-2 object-contain"
                         alt="google"
                       />
-            Connexion avec Google
+            Inscription avec Google
             </Button>
         </Field>
       </FieldGroup>

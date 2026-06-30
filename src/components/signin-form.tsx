@@ -103,7 +103,7 @@ export function SignInFormComponent({
               className="mr-2 object-contain"
               alt="google"
             />
-            Inscription avec Google
+            Connexion avec Google
           </Button>
         </Field>
       </FieldGroup>

@@ -90,10 +90,10 @@ export default function Home() {
       <section id="contact" className="items-center justify-center pt-10">
         <a
           href="mailto:haruka.izumi18&#64;gmail.com"
-          className="flex items-center gap-3 hover:text-[var(--secondary)] transition-colors"
+          className="inline-flex items-center gap-3 bg-[var(--secondary)] rounded-[2vw] shadow px-6 py-3 text-white font-semibold hover:opacity-90 hover:scale-100 active:scale-90"
         >
-          <Mail />
-          <h2 className="text-2xl font-bold">Contactez-moi</h2>
+          <Mail size={20} />
+          <span>Contactez-moi</span>
         </a>
       </section>
 
