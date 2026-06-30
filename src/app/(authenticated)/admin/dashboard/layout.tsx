@@ -1,7 +1,6 @@
-import type { ReactNode, CSSProperties } from "react"
-import { AppSidebar } from "@/components/app-sidebar"
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
-import { SiteHeader } from "@/components/site-header"
+import { AppSidebar } from "@/components/app-sidebar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { Header } from "./_components/layout/Header";
 
 export default function DashboardLayout({
   children,
@@ -20,8 +19,10 @@ export default function DashboardLayout({
       <AppSidebar variant="inset" />
 
       <SidebarInset>
-        <SiteHeader />
+        <Header />
+      <main className="flex-1 p-6">
         {children}
+        </main>
       </SidebarInset>
     </SidebarProvider>
   )

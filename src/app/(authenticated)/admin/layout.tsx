@@ -32,7 +32,7 @@ export default function RootLayout({
       lang="fr"
       className={cn("h-full", "antialiased", "font-sans", geist.variable)}
     >
-      <body className={`${notoSans.variable} flex w-full flex-col items-center py-20 px-16 font-sans dark:bg-black`}>{children}</body>
+      <body className={`${notoSans.variable} flex w-full flex-col items-center py-5 px-16 font-sans dark:bg-black`}>{children}</body>
     </html>
     </TooltipProvider>
   );

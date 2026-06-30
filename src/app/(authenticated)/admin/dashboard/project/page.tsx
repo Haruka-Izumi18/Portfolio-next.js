@@ -1,5 +1,5 @@
 import ProjectsTable from "./ProjectsTable";
-import { getProjects } from "./project/action/project.action";
+import { getProjects } from "./project.action";
 
 const PAGE_SIZE = 10;
 

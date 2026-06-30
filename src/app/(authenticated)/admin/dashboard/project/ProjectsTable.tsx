@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
-//import { GuardedButton } from "@/components/admin/GuardedButton"
 //import { useAdminCapabilities } from "../AdminCapabilitiesProvider"
 import {
   DropdownMenu,
@@ -47,8 +46,6 @@ function formatMinutesShort(seconds: number | null): string {
   return `${Math.max(1, Math.round(seconds / 60))} min`
 }
 
-
-
 export default function ProjectsTable({
   projects,
   total,
@@ -77,7 +74,7 @@ export default function ProjectsTable({
     const params = new URLSearchParams()
     if (debouncedSearch) params.set("search", debouncedSearch)
     params.set("page", "1")
-    router.push(`/admin/dashboard/projects?${params.toString()}`)
+    router.push(`/admin/dashboard/project?${params.toString()}`)
   }, [debouncedSearch, router, search])
 
   useEffect(() => {
@@ -94,11 +91,11 @@ export default function ProjectsTable({
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <Input
           type="search"
-          placeholder="Rechercher par nom ou ville"
+          placeholder="Rechercher par nom du project"
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
           className="max-w-sm"
-          aria-label="Rechercher une project (nom ou ville, sans tenir compte des majuscules)"
+          aria-label="Rechercher une project"
           autoComplete="off"
         />
         <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
@@ -111,7 +108,7 @@ export default function ProjectsTable({
               const params = new URLSearchParams()
               if (search) params.set("search", search)
               params.set("page", String(Math.max(1, page - 1)))
-              router.push(`/admin-game/dashboard/projects?${params.toString()}`)
+              router.push(`/admin-game/dashboard/project?${params.toString()}`)
             }}
           >
             Précédent
@@ -128,23 +125,12 @@ export default function ProjectsTable({
               const params = new URLSearchParams()
               if (search) params.set("search", search)
               params.set("page", String(page + 1))
-              router.push(`/admin/dashboard/projects?${params.toString()}`)
+              router.push(`/admin/dashboard/project?${params.toString()}`)
             }}
           >
             Suivant
           </Button>
-          {/* <GuardedButton
-            type="button"
-            size="sm"
-            allowed={caps.adventure.create}
-            denyReason="Vous ne pouvez pas créer une project."
-            onClick={() => router.push("/admin-game/dashboard/projects/create")}
-          >
-            Créer une project
-          </GuardedButton> 
-          {!caps.adventure.create ? (
-            <RequestNewAdventureDialog size="sm" />
-          ) : null} */}
+           
         </div>
       </div>
       <h1>Liste des projects</h1>
@@ -153,7 +139,7 @@ export default function ProjectsTable({
           <div className="rounded-lg border border-dashed p-10 text-center">
             <p className="text-sm font-medium">Erreur lors du chargement des projects</p>
             <p className="mt-1 text-sm text-muted-foreground">{loadError}</p>
-            <div className="mt-6 flex justify-center">
+            <div className="flex justify-center">
               <Button type="button" onClick={() => router.refresh()}>
                 Réessayer
               </Button>
