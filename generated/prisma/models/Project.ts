@@ -268,7 +268,7 @@ export type ProjectScalarWhereWithAggregatesInput = {
 }
 
 export type ProjectCreateInput = {
-  id: string
+  id?: string
   title: string
   description?: string | null
   image?: string | null
@@ -280,7 +280,7 @@ export type ProjectCreateInput = {
 }
 
 export type ProjectUncheckedCreateInput = {
-  id: string
+  id?: string
   title: string
   description?: string | null
   image?: string | null
@@ -316,7 +316,7 @@ export type ProjectUncheckedUpdateInput = {
 }
 
 export type ProjectCreateManyInput = {
-  id: string
+  id?: string
   title: string
   description?: string | null
   image?: string | null
@@ -464,7 +464,7 @@ export type ProjectUncheckedUpdateManyWithoutUserNestedInput = {
 }
 
 export type ProjectCreateWithoutTechnologiesInput = {
-  id: string
+  id?: string
   title: string
   description?: string | null
   image?: string | null
@@ -475,7 +475,7 @@ export type ProjectCreateWithoutTechnologiesInput = {
 }
 
 export type ProjectUncheckedCreateWithoutTechnologiesInput = {
-  id: string
+  id?: string
   title: string
   description?: string | null
   image?: string | null
@@ -524,7 +524,7 @@ export type ProjectUncheckedUpdateWithoutTechnologiesInput = {
 }
 
 export type ProjectCreateWithoutUserInput = {
-  id: string
+  id?: string
   title: string
   description?: string | null
   image?: string | null
@@ -535,7 +535,7 @@ export type ProjectCreateWithoutUserInput = {
 }
 
 export type ProjectUncheckedCreateWithoutUserInput = {
-  id: string
+  id?: string
   title: string
   description?: string | null
   image?: string | null
@@ -586,7 +586,7 @@ export type ProjectScalarWhereInput = {
 }
 
 export type ProjectCreateManyUserInput = {
-  id: string
+  id?: string
   title: string
   description?: string | null
   image?: string | null
