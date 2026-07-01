@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -10,34 +10,51 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { ChevronDownIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import type { Project } from "../../../../../../generated/prisma/client";
+import type { User } from "../../../../../../generated/prisma/client";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
+import { updateUserRole } from "./user.action";
+import { AVAILABLE_ROLES, type UserRole } from "@/lib/user/roles";
 
 const PAGE_SIZE = 10;
 
 type Props = {
-  projects: Project[];
+  users: User[];
   total: number;
   page: number;
   search: string;
   loadError: string | null;
 };
 
-export default function ProjectsTable({
-  projects,
+export default function UsersTable({
+  users,
   total,
   page,
   search,
   loadError,
 }: Props) {
   const router = useRouter();
-  //const caps = useAdminCapabilities()
   const [searchInput, setSearchInput] = useState(search);
   const [debouncedSearch, setDebouncedSearch] = useState("");
-
+  const [isPending, startTransition] = useTransition();
+  const [pendingUserId, setPendingUserId] = useState<string | null>(null);
 
   useEffect(() => {
     const t = setTimeout(() => {
@@ -51,7 +68,7 @@ export default function ProjectsTable({
     const params = new URLSearchParams();
     if (debouncedSearch) params.set("search", debouncedSearch);
     params.set("page", "1");
-    router.push(`/admin/dashboard/project?${params.toString()}`);
+    router.push(`/admin/dashboard/user?${params.toString()}`);
   }, [debouncedSearch, router, search]);
 
   useEffect(() => {
@@ -61,18 +78,32 @@ export default function ProjectsTable({
   const totalPages = total > 0 ? Math.max(1, Math.ceil(total / PAGE_SIZE)) : 1;
   const canPrev = page > 1;
   const canNext = page < totalPages;
-  const showEmptyState = !loadError && projects.length === 0;
+  const showEmptyState = !loadError && users.length === 0;
+
+  const handleRoleChange = (userId: string, role: UserRole) => {
+    setPendingUserId(userId);
+    startTransition(async () => {
+        const result = await updateUserRole(userId, role);
+        setPendingUserId(null);
+        if (!result.success) {
+            toast.error(result.error);
+            return;
+        }
+        toast.success("Rôle mis à jour");
+        router.refresh();
+    });
+  }
 
   return (
     <div className="space-y-4">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <Input
           type="search"
-          placeholder="Rechercher par nom du project"
+          placeholder="Rechercher par nom du user"
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
           className="max-w-sm"
-          aria-label="Rechercher une project"
+          aria-label="Rechercher une utilisateur"
           autoComplete="off"
         />
         <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
@@ -85,7 +116,7 @@ export default function ProjectsTable({
               const params = new URLSearchParams();
               if (search) params.set("search", search);
               params.set("page", String(Math.max(1, page - 1)));
-              router.push(`/admin-game/dashboard/project?${params.toString()}`);
+              router.push(`/admin-game/dashboard/user?${params.toString()}`);
             }}
           >
             Précédent
@@ -107,19 +138,19 @@ export default function ProjectsTable({
               const params = new URLSearchParams();
               if (search) params.set("search", search);
               params.set("page", String(page + 1));
-              router.push(`/admin/dashboard/project?${params.toString()}`);
+              router.push(`/admin/dashboard/user?${params.toString()}`);
             }}
           >
             Suivant
           </Button>
         </div>
       </div>
-      <h1>Liste des projects</h1>
+      <h1>Liste des utilisateurs</h1>
       <div className="p-4">
         {loadError ? (
           <div className="rounded-lg border border-dashed p-10 text-center">
             <p className="text-sm font-medium">
-              Erreur lors du chargement des projects
+              Erreur lors du chargement des utilisateurs
             </p>
             <p className="mt-1 text-sm text-muted-foreground">{loadError}</p>
             <div className="flex justify-center">
@@ -130,7 +161,7 @@ export default function ProjectsTable({
           </div>
         ) : showEmptyState ? (
           <div className="rounded-lg border border-dashed p-10 text-center">
-            <p className="text-sm font-medium">Aucune project pour le moment</p>
+            <p className="text-sm font-medium">Aucune utilisateur pour le moment</p>
 
             <div className="mt-6 flex flex-wrap justify-center gap-2"></div>
           </div>
@@ -138,37 +169,51 @@ export default function ProjectsTable({
           <Table className="m-auto">
             <TableHeader>
               <TableRow>
-                <TableHead className="text-left">titre</TableHead>
-                <TableHead className="text-left">URL</TableHead>
+                <TableHead className="text-left">Nom</TableHead>
+                <TableHead className="text-left">Rôle</TableHead>
+                <TableHead className="text-left">Email</TableHead>
                 <TableHead className="text-right">Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {projects.map((project) => (
-                <TableRow key={project.id}>
+              {users.map((user) => (
+                <TableRow key={user.id}>
                   <TableCell className="text-left font-medium">
-                    {project.title}
+                    {user.name}
                   </TableCell>
                   <TableCell className="text-left">
-                    <a
-                      href={project.demoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline underline-offset-4 text-muted-foreground hover:text-foreground"
-                    >
-                      {project.demoUrl}
-                    </a>
+                    {user.email}
+                  </TableCell>
+                  <TableCell className="text-left">
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button
+                          variant="outline"
+                          size="sm"
+                          className="gap-1 capitalize"
+                          disabled={isPending && pendingUserId === user.id}
+                        >
+                          {isPending && pendingUserId === user.id
+                            ? "..."
+                            : user.role ?? "user"}
+                          <ChevronDownIcon className="size-3" />
+                        </Button>
+                        </DropdownMenuTrigger>
+                    <DropdownMenuContent align="start">
+                        {AVAILABLE_ROLES.map((role) => (
+                          <DropdownMenuItem
+                            key={role}
+                            disabled={user.role === role}
+                            onClick={() => handleRoleChange(user.id, role)}
+                            className="capitalize"
+                          >
+                            {role}
+                          </DropdownMenuItem>
+                        ))}
+                      </DropdownMenuContent>
+                      </DropdownMenu>
                   </TableCell>
                   <TableCell className="text-right">
-                    <Link href={`/admin/dashboard/project/${project.id}`}>
-        <Button
-          type="button"
-          variant="outline"
-          size="sm"
-        >
-          Voir détail
-        </Button>
-        </Link>
         </TableCell>
                 </TableRow>
               ))}

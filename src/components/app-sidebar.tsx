@@ -42,7 +42,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       },
       {
         title: "Users",
-        url: "/admin/dashboard/users",
+        url: "/admin/dashboard/user",
         icon: <UsersIcon />,
       },
     ],
