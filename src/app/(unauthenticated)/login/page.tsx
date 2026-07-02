@@ -9,7 +9,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SignInFormComponent } from "@/components/signin-form";
 import { SingupFormComponent } from "@/components/signup-form";
-import { toast } from "sonner"
+import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -47,7 +47,6 @@ export default function LoginPage() {
     const { data, error } = await authClient.signIn.email({
       email: signInForm.email,
       password: signInForm.password,
-      callbackURL: "/admin/dashboard",
     });
     setLoading(false);
 
@@ -55,6 +54,14 @@ export default function LoginPage() {
       toast.error(error.message);
       return;
     }
+
+    const { data: sessionData } = await authClient.getSession();
+    if (sessionData?.user?.role !== ADMIN_ROLE){
+      await authClient.signOut();
+      toast.error("Accès réservé aux administrateurs");
+      return;
+    }
+    setLoading(false);
     router.push("/admin/dashboard");
   }
 
@@ -74,12 +81,13 @@ console.log("window.origin =", window.location.origin);
       callbackURL: "/admin/dashboard",
     });
     setLoading(false);
-    console.log(authClient);
 
     if (error) {
       toast.error(error.message);
       return;
     }
+    await authClient.signOut();
+    toast.success("Compte créé. Cette page est uniquement accessible aux administrateurs.")
     router.push("/admin/dashboard");
   }
 

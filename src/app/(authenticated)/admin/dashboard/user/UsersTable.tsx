@@ -171,8 +171,8 @@ export default function UsersTable({
             <TableHeader>
               <TableRow>
                 <TableHead className="text-left">Nom</TableHead>
-                <TableHead className="text-left">Rôle</TableHead>
                 <TableHead className="text-left">Email</TableHead>
+                <TableHead className="text-left">Rôle</TableHead>
                 <TableHead className="text-right">Action</TableHead>
               </TableRow>
             </TableHeader>
