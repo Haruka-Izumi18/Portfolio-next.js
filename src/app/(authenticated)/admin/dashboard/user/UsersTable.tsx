@@ -32,6 +32,7 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { updateUserRole } from "./user.action";
 import { AVAILABLE_ROLES, type UserRole } from "@/lib/user/roles";
+import DeleteUserDialog  from "./_components/DeleteUserDialog";
 
 const PAGE_SIZE = 10;
 
@@ -214,6 +215,11 @@ export default function UsersTable({
                       </DropdownMenu>
                   </TableCell>
                   <TableCell className="text-right">
+                    <DeleteUserDialog
+                        userId={user.id}
+                        userName={user.name}
+                        userEmail={user.email}
+                      />
         </TableCell>
                 </TableRow>
               ))}

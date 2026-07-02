@@ -76,3 +76,26 @@ export async function updateUserRole(
     return { success: false, error: "Erreur lors de la mise à jour du rôle." };
   }
 }
+
+export async function deleteUser(
+  userId: string
+): Promise<{ success: true } | { success: false; error: string }> {
+  try {
+    const session = await auth.api.getSession({ headers: await headers() });
+    if (!session?.user?.id) {
+      return { success: false, error: "Non authentifié." };
+    }
+    if (session.user.id === userId) {
+      return { success: false, error: "Vous ne pouvez pas supprimer votre propre compte." };
+    }
+
+    await prisma.user.delete({ where: { id: userId } });
+
+    revalidatePath("/admin/dashboard/user");
+
+    return { success: true };
+  } catch (error) {
+    console.error("deleteUser error:", error);
+    return { success: false, error: "Erreur lors de la suppression de l'utilisateur." };
+  }
+}
