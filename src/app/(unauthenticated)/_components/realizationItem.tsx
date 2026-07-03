@@ -17,8 +17,8 @@ import { motion } from "motion/react";
   animationIndex,
 }: {
   title: string;
-  image: string;
-  discription: string;
+  image: string | null;
+  discription: string | null;
   url: string;
   animationIndex: number;
 }) {return (
@@ -46,7 +46,7 @@ import { motion } from "motion/react";
         </CardContent>
         <Button asChild variant="outline" size="sm" className="bg-button p-2 text-white hover:focus hover:text-primary border-button">
           <a href={url} target="_blank" rel="noopener noreferrer">
-            Voir le projet
+            Voir ce projet
           </a>
         </Button>
     </Card>
