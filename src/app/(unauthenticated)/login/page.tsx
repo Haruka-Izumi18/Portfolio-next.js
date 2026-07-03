@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const ADMIN_ROLE = "admin" as const;
 
@@ -92,7 +93,7 @@ console.log("window.origin =", window.location.origin);
   }
 
   return (
-    <div className="w-full max-w-md">
+    <div className="w-full max-w-md flex flex-col gap-8">
       <Tabs defaultValue="signIn" className="w-[400px]">
         <TabsList>
           <TabsTrigger value="signIn">Connexion</TabsTrigger>
@@ -135,6 +136,8 @@ console.log("window.origin =", window.location.origin);
           </Card>
         </TabsContent>
       </Tabs>
+      <Link href="/" className="hover:underline">
+      Reteur à la pagge d&apos;acceuil</Link>
     </div>
   );
 }
