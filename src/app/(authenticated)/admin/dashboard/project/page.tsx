@@ -1,6 +1,7 @@
 import ProjectsTable from "./ProjectsTable";
 import { getProjects } from "./project.action";
 
+
 const PAGE_SIZE = 10;
 
 export default async function Page({
