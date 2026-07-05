@@ -90,15 +90,14 @@ export function SignInFormComponent({
             variant="outline"
             className="w-full border-primary bg-white text-primary hover:bg-primary/5"
             onClick={async () => {
-            
               const res = await authClient.signIn.social({
                 provider: "google",
                 callbackURL: "/admin/dashboard",
               });
-              console.log(JSON.stringify(res, null, 2));
-           if (res.data?.url) {
-  window.location.assign(res.data.url);
-}
+              console.log(res.data?.url);
+              if (res.data?.url) {
+                location.href = res.data.url;
+              }
             }}
           >
             <Image
