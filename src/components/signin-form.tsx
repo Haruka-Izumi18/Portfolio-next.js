@@ -90,10 +90,15 @@ export function SignInFormComponent({
             variant="outline"
             className="w-full border-primary bg-white text-primary hover:bg-primary/5"
             onClick={async () => {
-              await authClient.signIn.social({
+              try{
+              const res = await authClient.signIn.social({
                 provider: "google",
                 callbackURL: "/admin/dashboard",
               });
+              console.log(res);
+            } catch (error) {
+              console.error(error);
+            }
             }}
           >
             <Image
