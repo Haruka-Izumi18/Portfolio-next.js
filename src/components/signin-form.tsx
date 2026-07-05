@@ -95,7 +95,7 @@ export function SignInFormComponent({
                 provider: "google",
                 callbackURL: "/admin/dashboard",
               });
-              console.log(res);
+              console.log(JSON.stringify(res, null, 2));
             } catch (error) {
               console.error(error);
             }
