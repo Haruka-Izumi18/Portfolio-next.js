@@ -12,6 +12,11 @@ const connectionString = process.env.DATABASE_URL;
 if (!connectionString) {
   throw new Error("DATABASE_URL is not set in environment variables");
 }
+
+console.log("[DEBUG] DATABASE_URL exists:", !!process.env.DATABASE_URL);
+console.log("[DEBUG] DATABASE_URL length:", process.env.DATABASE_URL?.length);
+console.log("[DEBUG] DATABASE_URL first 20 chars:", process.env.DATABASE_URL?.slice(0, 20));
+console.log("[DEBUG] NODE_ENV:", process.env.NODE_ENV);
 const pool = new Pool({ connectionString });
 
 const adapter = new PrismaNeon(pool as unknown as ConstructorParameters<typeof PrismaNeon>[0]);
