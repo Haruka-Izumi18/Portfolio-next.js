@@ -9,5 +9,7 @@ export async function GET() {
     betterAuthUrl: process.env.BETTER_AUTH_URL,
     hasGoogleId: !!process.env.GOOGLE_CLIENT_ID,
     hasGoogleSecret: !!process.env.GOOGLE_CLIENT_SECRET,
+    hasTestVar: !!process.env.TEST_VAR,
+    testVarValue: process.env.TEST_VAR,
   });
 }
