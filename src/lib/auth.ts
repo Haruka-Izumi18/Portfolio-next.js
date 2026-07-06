@@ -1,25 +1,15 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
-import { PrismaClient } from "../../generated/prisma/client";
 import { admin } from "better-auth/plugins";
-import { PrismaNeon } from "@prisma/adapter-neon";
-import { neonConfig, Pool } from "@neondatabase/serverless";
-import ws from "ws";
-
-neonConfig.webSocketConstructor = ws;
+import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaClient } from "../../generated/prisma/client";
 
 const connectionString = process.env.DATABASE_URL;
 if (!connectionString) {
   throw new Error("DATABASE_URL is not set in environment variables");
 }
 
-console.log("[DEBUG] DATABASE_URL exists:", !!process.env.DATABASE_URL);
-console.log("[DEBUG] DATABASE_URL length:", process.env.DATABASE_URL?.length);
-console.log("[DEBUG] DATABASE_URL first 20 chars:", process.env.DATABASE_URL?.slice(0, 20));
-console.log("[DEBUG] NODE_ENV:", process.env.NODE_ENV);
-const pool = new Pool({ connectionString });
-
-const adapter = new PrismaNeon(pool as unknown as ConstructorParameters<typeof PrismaNeon>[0]);
+const adapter = new PrismaPg({ connectionString });
 const prisma = new PrismaClient({ adapter });
 
 export const auth = betterAuth({
@@ -35,10 +25,10 @@ export const auth = betterAuth({
     enabled: true,
   },
   socialProviders: {
-    google: { 
-            clientId: process.env.GOOGLE_CLIENT_ID as string, 
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET as string, 
-        }, 
+    google: {
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    },
   },
   plugins: [admin()],
 });
