@@ -85,7 +85,7 @@ export default function ProjectsTable({
               const params = new URLSearchParams();
               if (search) params.set("search", search);
               params.set("page", String(Math.max(1, page - 1)));
-              router.push(`/admin-game/dashboard/project?${params.toString()}`);
+              router.push(`/admin/dashboard/project?${params.toString()}`);
             }}
           >
             Précédent

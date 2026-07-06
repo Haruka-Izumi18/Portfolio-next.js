@@ -117,7 +117,7 @@ export default function UsersTable({
               const params = new URLSearchParams();
               if (search) params.set("search", search);
               params.set("page", String(Math.max(1, page - 1)));
-              router.push(`/admin-game/dashboard/user?${params.toString()}`);
+              router.push(`/admin/dashboard/user?${params.toString()}`);
             }}
           >
             Précédent
