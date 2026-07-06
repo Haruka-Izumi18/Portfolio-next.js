@@ -1,10 +1,17 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { PrismaClient } from "../../generated/prisma/client";
-import { PrismaPg } from "@prisma/adapter-pg";
 import { admin } from "better-auth/plugins";
+import { PrismaNeon } from "@prisma/adapter-neon";
+import { neonConfig, Pool } from "@neondatabase/serverless";
+import ws from "ws";
 
-const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
+neonConfig.webSocketConstructor = ws;
+
+const connectionString = process.env.DATABASE_URL!;
+const pool = new Pool({ connectionString });
+
+const adapter = new PrismaNeon(pool as unknown as ConstructorParameters<typeof PrismaNeon>[0]);
 const prisma = new PrismaClient({ adapter });
 
 export const auth = betterAuth({
