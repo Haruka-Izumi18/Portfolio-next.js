@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
   if (!file || !(file instanceof File)) {
     return NextResponse.json({ error: "Aucun fichier reçu."}, { status: 400 });
   }
-  if (!file?.type.startsWith("/image")){
+  if (!file?.type.startsWith("image/")){
     return NextResponse.json(
       { error: "Le fichier doit être une image."}, { status: 400 });
   }
