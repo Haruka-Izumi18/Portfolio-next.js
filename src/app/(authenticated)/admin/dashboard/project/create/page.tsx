@@ -83,15 +83,17 @@ export default function Page() {
       toast.error("L'image dépasse 5 Mo.")
       return
     }
-    setImageFile(file)
-    setPreviewUrl(URL.createObjectURL(file))
-  }
+    if (previewUrl) URL.revokeObjectURL(previewUrl);
+    setImageFile(file);
+    setPreviewUrl(URL.createObjectURL(file));
+  };
 
     const removeImage = () => {
-    setImageFile(null)
-    setPreviewUrl(null)
-    if (fileInputRef.current) fileInputRef.current.value = ""
-  }
+    if (previewUrl) URL.revokeObjectURL(previewUrl);
+    setImageFile(null);
+    setPreviewUrl(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
 
   const onSubmit = async (data: FormValues) => {
     try {

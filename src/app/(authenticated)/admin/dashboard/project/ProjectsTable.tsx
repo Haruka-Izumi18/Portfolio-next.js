@@ -34,7 +34,6 @@ export default function ProjectsTable({
   loadError,
 }: Props) {
   const router = useRouter();
-  //const caps = useAdminCapabilities()
   const [searchInput, setSearchInput] = useState(search);
   const [debouncedSearch, setDebouncedSearch] = useState("");
 

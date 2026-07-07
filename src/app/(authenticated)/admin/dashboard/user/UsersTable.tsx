@@ -13,15 +13,7 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ChevronDownIcon } from "lucide-react";
@@ -29,7 +21,6 @@ import { useRouter } from "next/navigation";
 import type { User } from "../../../../../../generated/prisma/client";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
-import Link from "next/link";
 import { updateUserRole } from "./user.action";
 import { AVAILABLE_ROLES, type UserRole } from "@/lib/user/roles";
 import DeleteUserDialog  from "./_components/DeleteUserDialog";
