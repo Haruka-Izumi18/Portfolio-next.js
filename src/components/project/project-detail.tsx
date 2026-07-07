@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useForm, type FieldErrors } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -31,7 +31,10 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { updateProject, deleteProject } from "@/lib/actions/update-delete-project";
+import {
+  updateProject,
+  deleteProject,
+} from "@/lib/actions/update-delete-project";
 
 type Project = {
   id: string;
@@ -58,7 +61,12 @@ const formSchema = z.object({
 
 type FormValues = z.output<typeof formSchema>;
 
-const FORM_FIELD_ORDER: (keyof FormValues)[] = ["title", "description", "image", "demoUrl"];
+const FORM_FIELD_ORDER: (keyof FormValues)[] = [
+  "title",
+  "description",
+  "image",
+  "demoUrl",
+];
 
 function scrollToFirstInvalidField(errors: FieldErrors<FormValues>) {
   for (const key of FORM_FIELD_ORDER) {
@@ -74,10 +82,18 @@ function scrollToFirstInvalidField(errors: FieldErrors<FormValues>) {
 
 export default function ProjectDetail({ project }: { project: Project }) {
   const router = useRouter();
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
 
-  const form = useForm<z.input<typeof formSchema>, undefined, z.output<typeof formSchema>>({
+  const form = useForm<
+    z.input<typeof formSchema>,
+    undefined,
+    z.output<typeof formSchema>
+  >({
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: project.title,
@@ -87,21 +103,86 @@ export default function ProjectDetail({ project }: { project: Project }) {
     },
   });
 
-  const onSubmit = async (data: FormValues) => {
-    const result = await updateProject(project.id, {
-      title: data.title,
-      description: data.description,
-      image: data.image || undefined,
-      demoUrl: data.demoUrl,
-    });
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
 
-    if (!result.success) {
-      toast.error(result.error);
+    if (!file.type.startsWith("image/")) {
+      toast.error("Veuillez sélectionner une image.");
       return;
     }
-    toast.success("Projet mis à jour.");
-    setIsEditing(false);
-    router.refresh();
+
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error("L'image dépasse 5 Mo.");
+      return;
+    }
+
+    if (previewUrl) URL.revokeObjectURL(previewUrl);
+
+    setImageFile(file);
+    setPreviewUrl(URL.createObjectURL(file));
+  };
+
+  const removeImage = () => {
+    if (previewUrl) URL.revokeObjectURL(previewUrl);
+
+    setImageFile(null);
+    setPreviewUrl(null);
+
+    form.setValue("image", "");
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  const onSubmit = async (data: FormValues) => {
+    try {
+      let imageUrl = data.image || "";
+
+      if (imageFile) {
+        setIsUploading(true);
+
+        const uploadForm = new FormData();
+        uploadForm.append("file", imageFile);
+
+        const res = await fetch("/api/upload", {
+          method: "POST",
+          body: uploadForm,
+        });
+
+        const result = await res.json();
+
+        if (!res.ok) {
+          toast.error(result.error || "Erreur lors de l'upload.");
+          setIsUploading(false);
+          return;
+        }
+
+        imageUrl = result.url;
+        setIsUploading(false);
+      }
+
+      const result = await updateProject(project.id, {
+        title: data.title,
+        description: data.description,
+        image: imageUrl || undefined,
+        demoUrl: data.demoUrl,
+      });
+
+      if (!result.success) {
+        toast.error(result.error);
+        return;
+      }
+
+      toast.success("Projet mis à jour.");
+      setIsEditing(false);
+      router.refresh();
+    } catch (e) {
+      toast.error(
+        e instanceof Error ? e.message : "Erreur lors de la mise à jour.",
+      );
+    }
   };
 
   const handleDelete = async () => {
@@ -121,7 +202,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
     <div className="w-full">
       <Card className="p-5">
         {!isEditing ? (
-         <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4">
             <div className="flex items-start justify-between">
               <h1 className="text-2xl font-bold">{project.title}</h1>
               <div className="flex gap-2">
@@ -136,13 +217,16 @@ export default function ProjectDetail({ project }: { project: Project }) {
                     <AlertDialogHeader>
                       <AlertDialogTitle>Supprimer ce projet ?</AlertDialogTitle>
                       <AlertDialogDescription>
-                        Cette action est irréversible. Le projet « {project.title} » sera
-                        définitivement supprimé.
+                        Cette action est irréversible. Le projet «{" "}
+                        {project.title} » sera définitivement supprimé.
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                       <AlertDialogCancel>Annuler</AlertDialogCancel>
-                      <AlertDialogAction onClick={handleDelete} disabled={isDeleting}>
+                      <AlertDialogAction
+                        onClick={handleDelete}
+                        disabled={isDeleting}
+                      >
                         {isDeleting ? "Suppression..." : "Supprimer"}
                       </AlertDialogAction>
                     </AlertDialogFooter>
@@ -166,8 +250,8 @@ export default function ProjectDetail({ project }: { project: Project }) {
               {project.description || "Aucune description."}
             </p>
 
-            
-             <a href={project.demoUrl}
+            <a
+              href={project.demoUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="text-sm underline underline-offset-4"
@@ -176,12 +260,15 @@ export default function ProjectDetail({ project }: { project: Project }) {
             </a>
 
             <p className="text-xs text-muted-foreground">
-              Créé le {new Date(project.createdAt).toLocaleDateString("fr-FR")} · Mis à jour le{" "}
+              Créé le {new Date(project.createdAt).toLocaleDateString("fr-FR")}{" "}
+              · Mis à jour le{" "}
               {new Date(project.updatedAt).toLocaleDateString("fr-FR")}
             </p>
           </div>
         ) : (
-            <form onSubmit={form.handleSubmit(onSubmit, scrollToFirstInvalidField)}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit, scrollToFirstInvalidField)}
+          >
             <FieldGroup>
               <FieldSet>
                 <FieldLegend>Modifier le projet</FieldLegend>
@@ -193,28 +280,61 @@ export default function ProjectDetail({ project }: { project: Project }) {
                   </Field>
 
                   <Field data-invalid={!!form.formState.errors.image}>
-                    <FieldLabel htmlFor="image">Image (URL)</FieldLabel>
-                    <Input id="image" placeholder="https://" {...form.register("image")} />
+                    <FieldLabel htmlFor="image">Image</FieldLabel>
+                    <Input
+                      id="image"
+                      type="file"
+                      accept="image/*"
+                      ref={fileInputRef}
+                      onChange={handleFileChange}
+                    />
+                    {(previewUrl || project.image) && (
+                      <div className="relative mt-2 h-40 w-40">
+                        <Image
+                          src={previewUrl ?? project.image!}
+                          alt="Preview"
+                          fill
+                          className="rounded-md object-cover"
+                        />
+                        <button
+                          type="button"
+                          onClick={removeImage}
+                          className="absolute -right-2 -top-2 rounded-full bg-red-500 px-2 text-xs text-white"
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    )}
                     <FieldError errors={[form.formState.errors.image]} />
                   </Field>
 
                   <Field data-invalid={!!form.formState.errors.demoUrl}>
                     <FieldLabel htmlFor="demoUrl">URL</FieldLabel>
-                    <Input id="demoUrl" placeholder="https://" {...form.register("demoUrl")} />
+                    <Input
+                      id="demoUrl"
+                      placeholder="https://"
+                      {...form.register("demoUrl")}
+                    />
                     <FieldError errors={[form.formState.errors.demoUrl]} />
                   </Field>
 
                   <Field data-invalid={!!form.formState.errors.description}>
                     <FieldLabel htmlFor="description">Description</FieldLabel>
-                    <Textarea id="description" className="resize-none" {...form.register("description")} />
+                    <Textarea
+                      id="description"
+                      className="resize-none"
+                      {...form.register("description")}
+                    />
                     <FieldError errors={[form.formState.errors.description]} />
                   </Field>
                 </FieldGroup>
               </FieldSet>
 
               <Field orientation="horizontal">
-                <Button type="submit" disabled={form.formState.isSubmitting}>
-                  {form.formState.isSubmitting ? "Enregistrement..." : "Enregistrer"}
+                <Button type="submit" disabled={form.formState.isSubmitting || isUploading}>
+                  {form.formState.isSubmitting || isUploading
+                    ? "Enregistrement..."
+                    : "Enregistrer"}
                 </Button>
                 <Button
                   variant="outline"
