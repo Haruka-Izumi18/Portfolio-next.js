@@ -32,7 +32,7 @@ import { motion } from "motion/react";
       <CardHeader>
         <div className="relative w-full h-48 rounded-md overflow-hidden">
           <Image
-            src={`/${image}`}
+            src={image ?? "/images/no-image.png"}
             alt={title}
             fill
             sizes="(max-width: 768px) 100vw, 384px"
