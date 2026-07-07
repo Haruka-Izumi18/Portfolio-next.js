@@ -2,10 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { put } from "@vercel/blob";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
-import { error } from "console";
-import { tr } from "zod/v4/locales";
 
-export const runtime = "node.js";
+export const runtime = "nodejs";
 
 const MAX_SIZE = 5 * 1024 * 1024; // 5MB
 
