@@ -31,7 +31,7 @@ export default function RootLayout({
     <TooltipProvider>
       <html
         lang="fr"
-        className={cn("h-full", "antialiased", "font-sans", geist.variable)}
+        className={cn("h-full", notoSans.variable, "font-sans", geist.variable)}
       >
         <body
           className={`${notoSans.variable} flex w-full flex-col items-center py-20 px-16 font-sans dark:bg-black`}

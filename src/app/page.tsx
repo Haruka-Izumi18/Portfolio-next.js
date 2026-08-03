@@ -8,6 +8,8 @@ import { getHomeProjects } from "./(unauthenticated)/home.action";
 export default async function Home() {
   const result = await getHomeProjects();
   const project = result.success ? result.data : [];
+  console.log(result);
+  console.log(project);
 
   return (
     <>
@@ -70,7 +72,7 @@ export default async function Home() {
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             {project.map((project, index) => (
               <RealizationItem
-                key={project.title}
+                key={project.id}
                 title={project.title}
                 image={project.image}
                 discription={project.description}

@@ -137,7 +137,7 @@ console.log("window.origin =", window.location.origin);
         </TabsContent>
       </Tabs>
       <Link href="/" className="hover:underline">
-      Reteur à la pagge d&apos;acceuil</Link>
+      Reteur à la page d&apos;acceuil</Link>
     </div>
   );
 }
