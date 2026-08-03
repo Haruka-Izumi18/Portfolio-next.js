@@ -39,9 +39,9 @@ import { motion } from "motion/react";
             className="object-cover"
           />
         </div>
-        <CardTitle className="pt-4 text-center text-primary font-semibold text-lg">{title}</CardTitle>
+        <CardTitle className="pt-4 text-center text-primary font-semibold text-xl">{title}</CardTitle>
       </CardHeader>
-      <CardContent className="pt-4 text-center text-primary font-normal text-lg">
+      <CardContent className="pt-4 text-center text-primary font-normal text-md">
         {discription}
         </CardContent>
         <Button asChild variant="outline" size="sm" className="bg-button p-2 text-white hover:focus hover:text-primary border-button">
