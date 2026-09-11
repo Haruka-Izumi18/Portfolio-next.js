@@ -85,17 +85,17 @@ export default async function Home() {
       </section>
       <section
         id="about"
-        className="flex flex-col items-center justify-center pt-10"
+        className="flex flex-col items-center justify-center px-4 py-10 sm:px-6 sm:py-14 md:py-20"
       >
         <div
-          className="mx-auto mt-4 flex items-center justify-center gap-10"
+          className="mx-auto mt-4 flex w-full max-w-xs items-center justify-center gap-3 sm:max-w-md sm:gap-6 md:max-w-lg md:gap-10"
           aria-hidden="true"
         >
-          <span className="h-[2px] w-10 bg-[var(--secondary)]/35"></span>
-          <h2 className="text-2xl font-bold leading-10 tracking-tight dark:text-zinc-50 pb-3">
-            À props
+          <span className="h-[2px] flex-1 max-w-6 bg-[var(--secondary)]/35 sm:max-w-8 md:max-w-10"></span>
+          <h2 className="whitespace-nowrap text-lg font-bold leading-10 tracking-tight dark:text-zinc-50 pb-3 sm:text-xl md:text-2xl">
+            À propos
           </h2>
-          <span className="h-[2px] w-10 bg-[var(--secondary)]/35"></span>
+          <span className="h-[2px] flex-1 max-w-6 bg-[var(--secondary)]/35 sm:max-w-8 md:max-w-10"></span>
         </div>
         <Profil />
       </section>
