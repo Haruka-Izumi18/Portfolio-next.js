@@ -34,7 +34,7 @@ export default function RootLayout({
         className={cn("h-full", notoSans.variable, "font-sans", geist.variable)}
       >
         <body
-          className={`${notoSans.variable} flex w-full flex-col items-center py-20 px-16 font-sans dark:bg-black`}
+          className={`${notoSans.variable} flex w-full flex-col items-center py-10 px-6 sm:py-16 sm:px-8 lg:py-20 lg:px-16 font-sans dark:bg-black`}
         >
           {children}
           <Toaster />
